@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { LearnerProfile, useAuth } from '../contexts/AuthContext';
+import { ROADMAP_OPTIONS } from '../data/roadmapOptions';
 
 const API = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000');
 
@@ -13,17 +14,6 @@ const emptyProfile: LearnerProfile = {
 // Onboarding must not become a dead end if a deployment's API is temporarily
 // restarting. These IDs exactly match the server catalogue, so selecting one
 // remains valid when the API returns.
-const roadmapFallback = [
-  ['ai-engineer', 'AI / ML Engineer', '🤖'], ['fullstack-engineer', 'Full Stack Engineer', '⚡'],
-  ['data-engineer', 'Data Engineer', '📊'], ['devops-engineer', 'DevOps / Cloud Engineer', '☁️'],
-  ['cybersecurity-engineer', 'Cybersecurity Engineer', '🔒'], ['embedded-iot-engineer', 'Embedded / IoT Engineer', '🔌'],
-  ['mechanical-engineer', 'Mechanical Engineer', '⚙️'], ['civil-engineer', 'Civil Engineer', '🏗️'],
-  ['electrical-engineer', 'Electrical Engineer', '⚡'], ['electronics-engineer', 'Electronics & Communication Engineer', '📡'],
-  ['chemical-engineer', 'Chemical Engineer', '🧪'], ['aerospace-engineer', 'Aerospace Engineer', '🚀'],
-  ['robotics-engineer', 'Robotics Engineer', '🦾'], ['automotive-engineer', 'Automotive Engineer', '🚗'],
-  ['biomedical-engineer', 'Biomedical Engineer', '🫀'],
-].map(([id, title, icon]) => ({ id, title, icon }));
-
 export default function ProfileSetup() {
   const { user, loading: authLoading, profile, saveProfile, sendVerificationEmail } = useAuth();
   const [form, setForm] = useState<LearnerProfile>(emptyProfile);
@@ -39,8 +29,8 @@ export default function ProfileSetup() {
 
   useEffect(() => {
     axios.get(`${API}/api/paths`)
-      .then(response => setRoadmaps(response.data.paths?.length ? response.data.paths : roadmapFallback))
-      .catch(() => setRoadmaps(roadmapFallback));
+      .then(response => setRoadmaps(response.data.paths?.length ? response.data.paths : ROADMAP_OPTIONS))
+      .catch(() => setRoadmaps(ROADMAP_OPTIONS));
   }, []);
 
   if (authLoading) return <div className="loading"><div className="spinner" /></div>;

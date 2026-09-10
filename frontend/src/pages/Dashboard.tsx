@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import LearningHub from './LearningHub';
 import KingdomCursor from '../components/KingdomCursor';
+import { ROADMAP_OPTIONS } from '../data/roadmapOptions';
 
 const API = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000');
 const featureMenu = [
@@ -24,7 +25,8 @@ export default function Dashboard() {
     axios.get(`${API}/api/announcements`).then(response => setAnnouncements(response.data.announcements || [])).catch(() => setAnnouncements([]));
   }, []);
 
-  const selectedPath = useMemo(() => paths.find(path => path.id === profile?.careerPathId), [paths, profile?.careerPathId]);
+  const selectedPath = useMemo(() => paths.find(path => path.id === profile?.careerPathId) || ROADMAP_OPTIONS.find(path => path.id === profile?.careerPathId), [paths, profile?.careerPathId]);
+  const selectedRole = selectedPath?.title || 'Engineering learner';
   const stats = useMemo(() => {
     const lessons = (selectedPath?.modules || []).flatMap((module: any) => module.lessons.map((lesson: any) => ({ ...lesson, moduleId: module.id })));
     const completed = lessons.filter((lesson: any) => completedLessons.includes(`${selectedPath?.id}:${lesson.id}`));
@@ -53,16 +55,16 @@ export default function Dashboard() {
     <KingdomCursor />
     <aside className={`dashboard-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
       <Link to="/" className="sidebar-brand"><span>EK</span><b>Engineer Kingdom</b></Link>
-      <div className="sidebar-profile"><small>WELCOME BACK</small><strong>{profile.name || user.displayName || 'Engineer'}</strong><span>{selectedPath?.title || 'Engineering learner'}</span><Link className="sidebar-change-path" to="/profile">↻ Change roadmap</Link></div>
+      <div className="sidebar-profile"><small>WELCOME BACK</small><strong>{profile.name || user.displayName || 'Engineer'}</strong><span>{selectedRole}</span><Link className="sidebar-change-path" to="/profile">↻ Change roadmap</Link></div>
       <div className="sidebar-search">🔍<input placeholder="Search features…" value={featureSearch} onChange={event => setFeatureSearch(event.target.value)} /></div>
       <nav className="sidebar-nav">{visibleMenu.map(([id, icon, label]) => <button key={id} className={id === activeFeature ? 'active' : ''} onClick={() => goTo(id)}><span>{icon}</span>{label}</button>)}</nav>
       <div className="sidebar-bottom"><Link to="/">⌂ Back to website</Link><button onClick={() => void logout()}>↪ Sign out</button></div>
     </aside>
-    <main className="dashboard-workspace"><header className="dashboard-topbar"><button className="sidebar-toggle" onClick={() => setSidebarOpen(value => !value)}>☰</button><h2>{activeLabel}</h2><div className="topbar-level" aria-label={`Level ${level}, ${levelXp} percent toward the next level`}><b>LVL {level}</b><span><i style={{ width: `${levelXp}%` }} /></span></div><div className="topbar-profile"><div><b>{profile.name || user.displayName || 'Engineer'}</b><span>Level {level} · {selectedPath?.title}</span></div><i>{initials}</i></div></header>
+    <main className="dashboard-workspace"><header className="dashboard-topbar"><button className="sidebar-toggle" onClick={() => setSidebarOpen(value => !value)}>☰</button><h2>{activeLabel}</h2><div className="topbar-level" aria-label={`Level ${level}, ${levelXp} percent toward the next level`}><b>LVL {level}</b><span><i style={{ width: `${levelXp}%` }} /></span></div><div className="topbar-profile"><div><b>{profile.name || user.displayName || 'Engineer'}</b><span>Level {level} · {selectedRole}</span></div><i>{initials}</i></div></header>
       <div className="dashboard-page" id="overview">{activeFeature === 'overview' ? <>
-        <section className="dashboard-hero dashboard-v2-hero"><div><span className="dashboard-kicker">YOUR ENGINEERING COMMAND CENTER</span><h1>Good to see you, <em>{profile.name?.split(' ')[0] || 'Engineer'}!</em></h1><p>Your {selectedPath?.title} roadmap is ready. Keep the next lesson moving.</p></div><button className="btn btn-primary" onClick={() => goTo('ai-tutor')}>Ask AI Tutor →</button></section>
+        <section className="dashboard-hero dashboard-v2-hero"><div><span className="dashboard-kicker">YOUR ENGINEERING COMMAND CENTER</span><h1>Good to see you, <em>{profile.name?.split(' ')[0] || 'Engineer'}!</em></h1><p>Your {selectedRole} roadmap is ready. Keep the next lesson moving.</p></div><button className="btn btn-primary" onClick={() => goTo('ai-tutor')}>Ask AI Tutor →</button></section>
         {announcements.length > 0 && <section className="learner-announcements" aria-label="Platform announcements"><span className="dashboard-kicker">KINGDOM NOTICEBOARD</span>{announcements.slice(0, 3).map(announcement => <article key={announcement.id}><h2>{announcement.title}</h2><p>{announcement.message}</p></article>)}</section>}
-        <section className="track-panel"><div className="track-panel-head"><div><span className="dashboard-kicker">YOUR SELECTED ROADMAP</span><h2>{selectedPath?.icon} {selectedPath?.title}</h2><p>{stats.modules} modules · {stats.total} lessons · tailored to your chosen role</p></div><Link to="/profile">Change →</Link></div><div className="track-counts"><article><strong>{stats.modules}</strong><span>Modules</span></article><article><strong>{stats.total}</strong><span>Lessons</span></article><article><strong>{percentage}%</strong><span>Complete</span></article></div></section>
+        <section className="track-panel"><div className="track-panel-head"><div><span className="dashboard-kicker">YOUR SELECTED ROADMAP</span><h2>{selectedPath?.icon} {selectedRole}</h2><p>{stats.modules} modules · {stats.total} lessons · tailored to your chosen role</p></div><Link to="/profile">Change {selectedRole} roadmap →</Link></div><div className="track-counts"><article><strong>{stats.modules}</strong><span>Modules</span></article><article><strong>{stats.total}</strong><span>Lessons</span></article><article><strong>{percentage}%</strong><span>Complete</span></article></div></section>
         <section className="dashboard-metric-grid"><article><span>🔥</span><b>{stats.completed}</b><small>Lessons completed</small></article><article><span>🧩</span><b>{assessmentAttempts.length}</b><small>Skill assessments</small></article><article><span>🔖</span><b>{bookmarks.length}</b><small>Saved resources</small></article><article><span>🏆</span><b>{level}</b><small>Current level</small></article></section>
         <section className="level-panel"><div><span>LEVEL {level}</span><b>{levelXp} XP</b></div><div className="progress-track"><i style={{ width: `${levelXp}%` }} /></div><small>Complete 3 lessons to advance to level {Math.min(10, level + 1)}.</small></section>
         <section className="analysis-panel"><div className="panel-heading"><div><span className="dashboard-kicker">LEARNING ANALYSIS</span><h2>Weekly progress</h2></div><span>This week</span></div><svg viewBox="0 0 690 200" preserveAspectRatio="none" aria-label="Weekly progress chart" role="img"><defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop stopColor="#e847af" stopOpacity=".42"/><stop offset="1" stopColor="#8b5cf6" stopOpacity="0"/></linearGradient></defs><polygon points={`0,200 ${weeklyPoints} 690,200`} fill="url(#chart-fill)"/><polyline points={weeklyPoints} fill="none" stroke="#ed4bb3" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/></svg><div className="chart-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Today</span></div></section>
