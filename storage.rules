@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Administrator assets are uploaded through the trusted FastAPI backend.
+    // Browsers receive neither direct write access nor broad bucket reads.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

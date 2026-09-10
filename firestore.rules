@@ -1,0 +1,150 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // Set this with Firebase Admin SDK custom claims. Client-supplied document
+    // fields never grant administrator access.
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    function validProfile(profile) {
+      return profile is map
+        && profile.keys().hasAll([
+          'name', 'username', 'email', 'phone', 'age', 'gender',
+          'collegeName', 'educationStatus', 'careerPathId'
+        ])
+        && profile.keys().hasOnly([
+          'name', 'username', 'email', 'phone', 'age', 'gender',
+          'collegeName', 'educationStatus', 'careerPathId', 'percentage'
+        ])
+        && profile.name is string && profile.name.size() >= 2 && profile.name.size() <= 100
+        && profile.username is string && profile.username.size() >= 3 && profile.username.size() <= 40
+        && profile.email is string && profile.email == request.auth.token.email
+        && profile.phone is string && profile.phone.size() >= 7 && profile.phone.size() <= 20
+        && profile.age is int && profile.age >= 13 && profile.age <= 120
+        && profile.gender is string && profile.gender.size() >= 1 && profile.gender.size() <= 40
+        && profile.collegeName is string && profile.collegeName.size() >= 2 && profile.collegeName.size() <= 160
+        && profile.educationStatus in ['UG', 'PG', 'Graduated']
+        && profile.careerPathId is string && profile.careerPathId.size() >= 2 && profile.careerPathId.size() <= 100
+        && (!('percentage' in profile)
+          || (profile.percentage is number
+            && profile.percentage >= 0
+            && profile.percentage <= 100));
+    }
+
+    function validLearner(data) {
+      return data.keys().hasOnly([
+          'name', 'email', 'completedLessons', 'createdAt', 'updatedAt', 'lastActiveAt',
+          'profile', 'profileCompleted', 'savedBookmarks', 'assessmentAttempts'
+        ])
+        && data.name is string && data.name.size() <= 100
+        && data.email is string && data.email == request.auth.token.email
+        && data.completedLessons is list && data.completedLessons.size() <= 5000
+        && (!('savedBookmarks' in data) || (data.savedBookmarks is list && data.savedBookmarks.size() <= 200))
+        && (!('assessmentAttempts' in data) || (data.assessmentAttempts is list && data.assessmentAttempts.size() <= 25))
+        && (!('profile' in data) || validProfile(data.profile))
+        && (!('profileCompleted' in data) || data.profileCompleted is bool);
+    }
+
+    match /users/{uid} {
+      allow get: if isOwner(uid) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(uid)
+        && validLearner(request.resource.data)
+        && (!('createdAt' in request.resource.data)
+          || request.resource.data.createdAt == request.time)
+        && (!('updatedAt' in request.resource.data)
+          || request.resource.data.updatedAt == request.time)
+        && (!('lastActiveAt' in request.resource.data)
+          || request.resource.data.lastActiveAt == request.time);
+      allow update: if isOwner(uid)
+        && validLearner(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['updatedAt'])
+          || request.resource.data.updatedAt == request.time);
+      allow delete: if isAdmin();
+    }
+
+    // Public learning catalog. Only trusted administrators can modify it.
+    match /learningPaths/{pathId} {
+      allow read: if true;
+      allow write: if isAdmin();
+
+      match /modules/{moduleId} {
+        allow read: if true;
+        allow write: if isAdmin();
+
+        match /lessons/{lessonId} {
+          allow read: if true;
+          allow write: if isAdmin();
+        }
+      }
+    }
+
+    match /modules/{moduleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /jobs/{jobId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Learners can submit reports but cannot alter them after submission.
+    match /reports/{reportId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasAll(['createdBy', 'createdAt', 'status'])
+        && request.resource.data.keys().hasOnly([
+          'createdBy', 'createdAt', 'status', 'resourceUrl', 'issueType',
+          'details', 'resolvedAt', 'resolvedBy'
+        ])
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.status == 'open'
+        && !('resolvedAt' in request.resource.data)
+        && !('resolvedBy' in request.resource.data);
+      allow get: if isAdmin() || (signedIn() && resource.data.createdBy == request.auth.uid);
+      allow list: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // These operational records are written only by the trusted backend. They
+    // must never be readable or forgeable from a learner browser.
+    match /auditLogs/{logId} {
+      allow read, write: if false;
+    }
+
+    match /telemetryEvents/{eventId} {
+      allow read, write: if false;
+    }
+
+    match /uploads/{uploadId} {
+      allow read, write: if false;
+    }
+
+    // Deny every collection that has not been explicitly modeled above.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
