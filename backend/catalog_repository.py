@@ -45,8 +45,17 @@ class CatalogRepository:
         if self._db is None:
             with self._lock:
                 return deepcopy(self._memory)
-        self._ensure_seeded()
-        cloud_paths = {snapshot.id: snapshot.to_dict() for snapshot in self._collection.stream()}
+        try:
+            self._ensure_seeded()
+            cloud_paths = {snapshot.id: snapshot.to_dict() for snapshot in self._collection.stream()}
+        except Exception:
+            # Public pages and onboarding must remain usable even if Firestore
+            # is temporarily unavailable, the database has not been created,
+            # or a deployment has a bad server credential. Authoring routes
+            # continue to require Firestore and will return their explicit
+            # errors rather than accepting an in-memory write.
+            with self._lock:
+                return deepcopy(self._memory)
         # Firestore does not guarantee the original insertion order. Retain the
         # curated homepage order, followed by any future admin-created paths.
         ordered_ids = [path_id for path_id in self._defaults if path_id in cloud_paths]
