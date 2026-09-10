@@ -227,14 +227,23 @@ def create_firestore_client() -> Any | None:
     try:
         firebase_app = firebase_admin.get_app()
     except ValueError:
-        if service_account_json:
-            # An explicitly configured but invalid credential must stop startup;
-            # silently falling back would make production writes ephemeral.
-            firebase_app = firebase_admin.initialize_app(
-                credentials.Certificate(json.loads(service_account_json))
-            )
-        elif project_id and (has_adc or has_emulator):
-            firebase_app = firebase_admin.initialize_app(options={"projectId": project_id})
-        else:
+        try:
+            if service_account_json:
+                firebase_app = firebase_admin.initialize_app(
+                    credentials.Certificate(json.loads(service_account_json))
+                )
+            elif project_id and (has_adc or has_emulator):
+                firebase_app = firebase_admin.initialize_app(options={"projectId": project_id})
+            else:
+                return None
+        except Exception:
+            # The public catalogue must never disappear because an optional
+            # Firestore credential is malformed or temporarily unavailable.
+            # CatalogRepository then serves its curated in-memory defaults;
+            # server-only write operations still return their explicit 503.
             return None
-    return firestore.client(app=firebase_app)
+
+    try:
+        return firestore.client(app=firebase_app)
+    except Exception:
+        return None
