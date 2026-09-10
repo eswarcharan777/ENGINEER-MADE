@@ -10,6 +10,20 @@ const emptyProfile: LearnerProfile = {
   collegeName: '', educationStatus: 'UG', careerPathId: '',
 };
 
+// Onboarding must not become a dead end if a deployment's API is temporarily
+// restarting. These IDs exactly match the server catalogue, so selecting one
+// remains valid when the API returns.
+const roadmapFallback = [
+  ['ai-engineer', 'AI / ML Engineer', '🤖'], ['fullstack-engineer', 'Full Stack Engineer', '⚡'],
+  ['data-engineer', 'Data Engineer', '📊'], ['devops-engineer', 'DevOps / Cloud Engineer', '☁️'],
+  ['cybersecurity-engineer', 'Cybersecurity Engineer', '🔒'], ['embedded-iot-engineer', 'Embedded / IoT Engineer', '🔌'],
+  ['mechanical-engineer', 'Mechanical Engineer', '⚙️'], ['civil-engineer', 'Civil Engineer', '🏗️'],
+  ['electrical-engineer', 'Electrical Engineer', '⚡'], ['electronics-engineer', 'Electronics & Communication Engineer', '📡'],
+  ['chemical-engineer', 'Chemical Engineer', '🧪'], ['aerospace-engineer', 'Aerospace Engineer', '🚀'],
+  ['robotics-engineer', 'Robotics Engineer', '🦾'], ['automotive-engineer', 'Automotive Engineer', '🚗'],
+  ['biomedical-engineer', 'Biomedical Engineer', '🫀'],
+].map(([id, title, icon]) => ({ id, title, icon }));
+
 export default function ProfileSetup() {
   const { user, loading: authLoading, profile, saveProfile, sendVerificationEmail } = useAuth();
   const [form, setForm] = useState<LearnerProfile>(emptyProfile);
@@ -24,7 +38,9 @@ export default function ProfileSetup() {
   }, [user, profile]);
 
   useEffect(() => {
-    axios.get(`${API}/api/paths`).then(response => setRoadmaps(response.data.paths || [])).catch(() => setRoadmaps([]));
+    axios.get(`${API}/api/paths`)
+      .then(response => setRoadmaps(response.data.paths?.length ? response.data.paths : roadmapFallback))
+      .catch(() => setRoadmaps(roadmapFallback));
   }, []);
 
   if (authLoading) return <div className="loading"><div className="spinner" /></div>;
