@@ -108,7 +108,15 @@ export default function LearningHub({ embedded = false, activeFeature, onFeature
     if (!code.trim() || codeBusy) return;
     setCodeBusy(true); setCodeOutput(codeLanguage === 'python' ? 'Loading the free Python runtime…' : 'Running JavaScript…');
     try {
-      if (codeLanguage === 'javascript') { const output:string[] = []; const write = (...items:any[]) => output.push(items.map(String).join(' ')); const result = new Function('console', 'input', code)({ log:write, error:write, warn:write }, codeInput); if (result !== undefined) write(result); setCodeOutput(output.join('\n') || 'Program finished with no output.'); }
+      if (codeLanguage === 'javascript') {
+        const output:string[] = [];
+        const write = (...items:any[]) => output.push(items.map(String).join(' '));
+        // This is the explicit execution boundary for learner-written JavaScript.
+        // eslint-disable-next-line no-new-func
+        const result = new Function('console', 'input', code)({ log:write, error:write, warn:write }, codeInput);
+        if (result !== undefined) write(result);
+        setCodeOutput(output.join('\n') || 'Program finished with no output.');
+      }
       else {
         const loader = (window as any).loadPyodide;
         if (!loader) throw new Error('Python is still downloading. Check your connection, wait a moment, then run again.');
