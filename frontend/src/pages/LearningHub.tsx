@@ -144,7 +144,58 @@ export default function LearningHub({ embedded = false, activeFeature, onFeature
     finally { setTutorBusy(false); }
   };
   const speak = (text:string) => { window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(text); utterance.rate=.95; window.speechSynthesis.speak(utterance); };
-  const startVoice = () => { const Recognition=(window as any).SpeechRecognition || (window as any).webkitSpeechRecognition; if(!Recognition){setTutorError('Voice input is not supported in this browser. Use Chrome or Edge.');return;} const recognition=new Recognition(); recognition.lang='en-IN'; recognition.interimResults=false; recognition.onresult=(event:any)=>setTutorQuestion(event.results[0][0].transcript); recognition.onerror=()=>setTutorError('Voice input could not start. Allow microphone access and retry.'); recognition.start(); };
+  const startVoice = async () => {
+    const Recognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!Recognition) { setTutorError('Voice input is not supported in this browser. Use the latest Chrome or Edge, or type your question.'); return; }
+    if (!navigator.mediaDevices?.getUserMedia) { setTutorError('This browser cannot access a microphone. Use the latest Chrome or Edge, or type your question.'); return; }
+
+    setTutorError('');
+    let stream: MediaStream | null = null;
+    let receivedTranscript = false;
+    let receivedError = false;
+    const stopMicrophone = () => stream?.getTracks().forEach(track => track.stop());
+
+    try {
+      // Request the selected microphone first so a device/busy/permission error
+      // is reported clearly before Chrome's speech service starts.
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stopMicrophone();
+      stream = null;
+      const recognition = new Recognition();
+      recognition.lang = 'en-IN';
+      recognition.interimResults = false;
+      recognition.continuous = false;
+      recognition.maxAlternatives = 1;
+      recognition.onresult = (event: any) => {
+        receivedTranscript = true;
+        setTutorQuestion(event.results[0][0].transcript);
+      };
+      recognition.onerror = (event: any) => {
+        receivedError = true;
+        const errors: Record<string, string> = {
+          'not-allowed': 'Microphone access was denied by the browser. Check the site permission, then reload.',
+          'service-not-allowed': 'Chrome speech recognition is disabled. Check Chrome microphone and speech service settings.',
+          'audio-capture': 'Chrome cannot use the selected microphone. Close any app using it, select another microphone, then retry.',
+          'network': 'Chrome could not reach its speech-recognition service. Check your internet connection and retry.',
+          'no-speech': 'No speech was detected. Press the microphone and speak clearly after it starts.',
+          'aborted': 'Voice input was interrupted. Close other microphone apps and retry.',
+        };
+        setTutorError(errors[event.error] || `Voice input failed (${event.error || 'unknown error'}). Type your question or retry.`);
+      };
+      recognition.onend = () => {
+        stopMicrophone();
+        if (!receivedTranscript && !receivedError) setTutorError('No speech was detected. Press the microphone and speak after it starts.');
+      };
+      recognition.start();
+    } catch (error: any) {
+      stopMicrophone();
+      const name = error?.name || '';
+      if (name === 'NotAllowedError' || name === 'SecurityError') setTutorError('Chrome could not access the microphone. Check the site permission and Windows microphone privacy settings, then reload.');
+      else if (name === 'NotFoundError') setTutorError('No microphone was found. Connect or select a microphone in Chrome settings, then retry.');
+      else if (name === 'NotReadableError') setTutorError('The microphone is busy or unavailable. Close Teams, Meet, Discord, or another microphone app, then retry.');
+      else setTutorError('Microphone setup failed. Type your question or retry after checking your microphone device.');
+    }
+  };
   const downloadResume = () => {
     const text = `${profile?.name || user.displayName}\n${profile?.email || user.email}\n${profile?.collegeName || ''}\n\nCompleted lessons: ${completedLessons.length}\nProjects:\n${state.projects.map(p => `- ${p.title}: ${p.github}`).join('\n')}`;
     const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' })); const a = document.createElement('a'); a.href = url; a.download = 'engineering-resume.txt'; a.click(); URL.revokeObjectURL(url);
