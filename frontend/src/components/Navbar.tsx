@@ -60,7 +60,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
-        <span>Engineer</span> Kingdom
+        <span>Engineer</span> Made
       </Link>
 
       <ul className={`navbar-links ${showMobileMenu ? 'mobile-open' : ''}`}>

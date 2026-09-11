@@ -6,7 +6,7 @@ export function PageLoading({ label = 'Preparing your experience…' }: { label?
     <div className="route-state-emblem" aria-hidden="true">EK</div>
     <div className="spinner" aria-hidden="true" />
     <h1>{label}</h1>
-    <p>The gates of Engineer Kingdom will open in a moment.</p>
+    <p>Engineer Made will open in a moment.</p>
   </section>;
 }
 

@@ -57,7 +57,7 @@ export default function Dashboard() {
   return <div className="dashboard-shell dashboard-v2">
     <KingdomCursor />
     <aside className={`dashboard-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
-      <Link to="/" className="sidebar-brand"><span>EK</span><b>Engineer Kingdom</b></Link>
+      <Link to="/" className="sidebar-brand"><span>EM</span><b>Engineer Made</b></Link>
       <div className="sidebar-profile"><small>WELCOME BACK</small><strong>{profile.name || user.displayName || 'Engineer'}</strong><span>{selectedRole}</span><Link className="sidebar-change-path" to="/profile">↻ Change roadmap</Link></div>
       <div className="sidebar-search">🔍<input placeholder="Search features…" value={featureSearch} onChange={event => setFeatureSearch(event.target.value)} /></div>
       <nav className="sidebar-nav">{visibleMenu.map(([id, icon, label]) => <button key={id} className={id === activeFeature ? 'active' : ''} onClick={() => goTo(id)}><span>{icon}</span>{label}</button>)}</nav>

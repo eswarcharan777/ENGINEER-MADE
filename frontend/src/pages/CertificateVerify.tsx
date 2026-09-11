@@ -30,9 +30,9 @@ export default function CertificateVerify() {
   };
 
   return <section className="certificate-verify-page">
-    <span className="dashboard-kicker">ENGINEER KINGDOM · CREDENTIAL CHECK</span>
+    <span className="dashboard-kicker">ENGINEER MADE · CREDENTIAL CHECK</span>
     <h1>Verify a certificate</h1>
-    <p>Enter a certificate code to confirm that an Engineer Kingdom learning milestone is valid.</p>
+    <p>Enter a certificate code to confirm that an Engineer Made learning milestone is valid.</p>
     <form onSubmit={verify} className="certificate-verify-form">
       <label>Certificate code<input value={code} onChange={event => setCode(event.target.value.toUpperCase())} placeholder="EK-XXXXXXXXXXXX" autoCapitalize="characters" /></label>
       <button className="btn btn-primary" disabled={checking}>{checking ? 'Checking…' : 'Verify certificate'}</button>
@@ -44,6 +44,6 @@ export default function CertificateVerify() {
       <div><strong>{certificate.completedLessons}</strong><small>lessons completed</small><strong>{certificate.code}</strong><small>certificate code</small></div>
       {certificate.issuedAt && <small>Issued {new Date(certificate.issuedAt).toLocaleDateString()}</small>}
     </article>}
-    <Link to="/" className="certificate-back">Return to Engineer Kingdom</Link>
+    <Link to="/" className="certificate-back">Return to Engineer Made</Link>
   </section>;
 }

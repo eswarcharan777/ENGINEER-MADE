@@ -423,7 +423,7 @@ CATALOG = CatalogRepository(LEARNING_PATHS, create_firestore_client())
 
 
 class CertificateIssueRequest(BaseModel):
-    track_title: str = "Engineer Kingdom learning milestone"
+    track_title: str = "Engineer Made learning milestone"
 
 
 def _certificate_database():
@@ -451,8 +451,8 @@ def issue_certificate(request: CertificateIssueRequest, claims: dict = Depends(r
     code = _certificate_code(uid)
     certificate = {
         "code": code,
-        "learnerName": profile.get("name") or learner.get("name") or claims.get("name") or "Engineer Kingdom learner",
-        "trackTitle": request.track_title.strip()[:160] or "Engineer Kingdom learning milestone",
+        "learnerName": profile.get("name") or learner.get("name") or claims.get("name") or "Engineer Made learner",
+        "trackTitle": request.track_title.strip()[:160] or "Engineer Made learning milestone",
         "completedLessons": len(completed),
         "status": "valid",
         "issuedAt": datetime.now(timezone.utc),
@@ -476,8 +476,8 @@ def verify_certificate(code: str):
     return {
         "valid": True,
         "code": normalized,
-        "learnerName": record.get("learnerName", "Engineer Kingdom learner"),
-        "trackTitle": record.get("trackTitle", "Engineer Kingdom learning milestone"),
+        "learnerName": record.get("learnerName", "Engineer Made learner"),
+        "trackTitle": record.get("trackTitle", "Engineer Made learning milestone"),
         "completedLessons": int(record.get("completedLessons", 0)),
         "issuedAt": issued_at.isoformat() if issued_at else None,
     }
@@ -588,7 +588,7 @@ async def ai_tutor_vision(
     if not content or len(content) > 5 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="References must be between 1 byte and 5 MB.")
     prompt = (
-        "You are Engineer Kingdom's engineering visual tutor. Analyze the supplied learner reference as a "
+        "You are Engineer Made's engineering visual tutor. Analyze the supplied learner reference as a "
         f"{doubt_kind[:80]}. Their context is: {context[:3000] or 'No written context supplied.'} "
         "Explain what is visible, identify likely issues or concepts, give a numbered diagnostic process, "
         "and state safety limits for electrical, mechanical, chemical, or high-voltage work. Do not claim "

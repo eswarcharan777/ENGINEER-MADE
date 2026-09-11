@@ -3,9 +3,9 @@ import React from 'react';
 function About() {
   return (
     <div className="about-page">
-      <h1>About Engineer Kingdom</h1>
+      <h1>About Engineer Made</h1>
       <p>
-        Engineer Kingdom is a free, professional learning platform built for Indian engineering students
+        Engineer Made is a free, professional learning platform built for Indian engineering students
         and professionals who want to upskill with AI and modern technology.
       </p>
       <p>

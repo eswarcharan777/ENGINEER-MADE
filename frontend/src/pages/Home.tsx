@@ -27,7 +27,7 @@ function Home() {
           </div>
           <h1>
             Build Your Legacy in the<br />
-            <span className="gradient-text">Engineer Kingdom</span>
+            <span className="gradient-text">Engineer Made</span>
           </h1>
           <p>
             Enter a living 3D citadel of engineering knowledge. Master your discipline,
@@ -35,7 +35,7 @@ function Home() {
           </p>
           <div className="hero-cta">
             <Link to="/paths" className="btn btn-primary">
-              Enter the Kingdom <ArrowRightIcon />
+              Explore learning paths <ArrowRightIcon />
             </Link>
             <Link to="/signup" className="btn btn-secondary">
               Join Free
@@ -100,7 +100,7 @@ function Home() {
 
       <section className="section">
         <div className="section-header">
-          <h2>Why Engineer Kingdom?</h2>
+          <h2>Why Engineer Made?</h2>
           <p>Built for engineers, by engineers. Here's what makes us different.</p>
         </div>
         <div className="features-grid">

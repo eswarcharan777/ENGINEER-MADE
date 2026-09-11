@@ -149,7 +149,7 @@ export default function Admin() {
     const blob = new Blob([JSON.stringify(data.paths, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = url; link.download = `engineer-kingdom-catalog-${new Date().toISOString().slice(0, 10)}.json`; link.click();
+    link.href = url; link.download = `engineer-made-catalog-${new Date().toISOString().slice(0, 10)}.json`; link.click();
     URL.revokeObjectURL(url);
   }
 
@@ -158,7 +158,7 @@ export default function Admin() {
 
   return <div className="admin-page">
     <div className="admin-header">
-      <div><span className="dashboard-kicker">KINGDOM CONTROL ROOM</span><h1>Content administration</h1><p>Monitor the platform, manage learning content, and prepare releases.</p></div>
+      <div><span className="dashboard-kicker">ENGINEER MADE CONTROL ROOM</span><h1>Content administration</h1><p>Monitor the platform, manage learning content, and prepare releases.</p></div>
       <div className="admin-header-actions"><div className={`admin-health ${apiOnline ? 'online' : apiOnline === false ? 'offline' : ''}`}><span /> API {apiOnline ? 'Online' : apiOnline === false ? 'Offline' : 'Checking'}</div><a href="/">Public website</a><button type="button" onClick={logout}>Sign out</button></div>
     </div>
 

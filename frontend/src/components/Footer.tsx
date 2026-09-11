@@ -6,7 +6,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-brand">
-          <h3>Engineer Kingdom</h3>
+          <h3>Engineer Made</h3>
           <p>Empowering every Indian engineer to learn, build, and grow with AI-powered education. Free, professional, and accessible to all.</p>
         </div>
         <div className="footer-col">
@@ -29,7 +29,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>&copy; {new Date().getFullYear()} Engineer Kingdom. All rights reserved.</span>
+        <span>&copy; {new Date().getFullYear()} Engineer Made. All rights reserved.</span>
         <span>
           3D castle: <a href="https://sketchfab.com/3d-models/fantasy-castle-1b3756460dde44399fd7b9bb3b78127c" target="_blank" rel="noreferrer">Fantasy Castle</a>
           {' '}by Toni García Vilche · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>
