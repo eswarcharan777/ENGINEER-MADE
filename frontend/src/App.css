@@ -697,6 +697,34 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 
 /* Unified learner-tool presentation: Engineer Kingdom royal identity, not the reference site's theme. */
 .feature-workspace { padding-bottom:2.5rem !important; }
+
+/* Learner workspace upgrades */
+.note-library { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1rem; margin-top:1.25rem; }
+.note-paper { min-height:150px; padding:1.1rem; display:flex; gap:.8rem; align-items:flex-start; background:linear-gradient(145deg,#fff9e8,#efe2b8); color:#271b0b; border:1px solid #d7b862; border-radius:5px 18px 10px 16px; box-shadow:8px 9px 0 rgba(184,139,29,.16); transform:rotate(-.45deg); }
+.note-paper:nth-child(even) { transform:rotate(.45deg); }
+.note-paper span { font-size:1.35rem; }
+.note-paper b { display:block; text-transform:capitalize; font-family:var(--font-display,Georgia,serif); font-size:1.08rem; }
+.note-paper p { margin:.55rem 0; white-space:pre-wrap; }
+.note-paper small { display:block; color:#6d5323; margin-top:.6rem; }
+.compiler-workspace > header,.resume-builder > header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
+.compiler-workspace > header h2,.resume-builder > header h2 { margin-bottom:.3rem; }
+.compiler-split,.resume-grid { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr); gap:1rem; margin-top:1rem; }
+.compiler-split section,.resume-form,.resume-preview { min-width:0; padding:1rem; border:1px solid rgba(226,181,63,.32); border-radius:12px; background:rgba(5,9,23,.54); }
+.compiler-split label,.resume-form label { display:block; margin:.4rem 0 .45rem; color:#e7d9b9; font-weight:700; }
+.compiler-split textarea { width:100%; box-sizing:border-box; }
+.code-editor { min-height:310px; font-family:Consolas,"Courier New",monospace; line-height:1.5; }
+.compiler-input { min-height:84px; font-family:Consolas,"Courier New",monospace; }
+.compiler-console { display:flex; flex-direction:column; }
+.compiler-console pre { flex:1; min-height:300px; margin:0 0 1rem; padding:1rem; overflow:auto; white-space:pre-wrap; background:#05070d; color:#d7fddf; border:1px solid #26334a; border-radius:8px; font-family:Consolas,"Courier New",monospace; }
+.resume-form { display:grid; gap:.8rem; }
+.resume-form input,.resume-form textarea { width:100%; box-sizing:border-box; margin-top:.4rem; }
+.resume-form textarea { min-height:120px; }
+.resume-preview { background:#fffdf5; color:#272116; box-shadow:0 12px 35px rgba(0,0,0,.23); }
+.resume-preview small { color:#806a37; letter-spacing:.08em; }
+.resume-preview h2,.resume-preview h3 { color:#271b0b; margin:.65rem 0 .35rem; }
+.resume-preview h3 { border-bottom:1px solid #d8c483; padding-bottom:.3rem; font-size:.9rem; text-transform:uppercase; letter-spacing:.06em; }
+.resume-preview p { color:#4e422c; white-space:pre-wrap; }
+@media (max-width:760px) { .compiler-split,.resume-grid { grid-template-columns:1fr; } .compiler-workspace > header,.resume-builder > header { flex-direction:column; } .code-editor { min-height:230px; } }
 .feature-workspace .feature-detail-hero { padding:clamp(1.5rem,3vw,2.5rem); border-color:rgba(216,167,43,.42); background:radial-gradient(circle at 95% 0,rgba(216,167,43,.18),transparent 32%),linear-gradient(135deg,#171126,#0d1324); box-shadow:0 18px 44px rgba(0,0,0,.2); }
 .feature-workspace .feature-hero-icon { background:linear-gradient(135deg,#d8a72b,#79500e); border-color:#edcd6d; box-shadow:0 10px 28px rgba(216,167,43,.2); }
 .feature-workspace .feature-detail-hero h1 { font-family:'Cinzel',Georgia,serif; color:#fff5df; letter-spacing:.01em; }
