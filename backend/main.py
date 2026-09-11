@@ -513,57 +513,6 @@ class DailyChallengeRequest(BaseModel):
     challenge_id: str
 
 
-class CompilerRequest(BaseModel):
-    language: str
-    code: str
-    stdin: str = ""
-
-
-@app.post("/api/compiler/run")
-async def run_compiler(request: CompilerRequest, _user: dict = Depends(require_user)):
-    """Execute learner code only through a separately configured sandbox service."""
-    runtimes = {"c": "c", "cpp": "c++", "python": "python", "java": "java", "javascript": "javascript"}
-    language = request.language.strip().lower()
-    code = request.code.replace("\r\n", "\n")
-    if language not in runtimes:
-        raise HTTPException(status_code=400, detail="Choose C, C++, Python, Java, or JavaScript.")
-    if not code.strip() or len(code) > 12_000:
-        raise HTTPException(status_code=400, detail="Code must be between 1 and 12,000 characters.")
-    if len(request.stdin) > 4_000:
-        raise HTTPException(status_code=400, detail="Standard input must be 4,000 characters or fewer.")
-
-    runner_url = os.getenv("CODE_RUNNER_URL", "").strip()
-    runner_token = os.getenv("CODE_RUNNER_TOKEN", "").strip()
-    if not runner_url:
-        raise HTTPException(status_code=503, detail="Online compiler is not configured yet. Set CODE_RUNNER_URL to a sandboxed Piston-compatible runner.")
-
-    headers = {"Content-Type": "application/json"}
-    if runner_token:
-        headers["Authorization"] = f"Bearer {runner_token}"
-    payload = {
-        "language": runtimes[language], "version": "*", "files": [{"content": code}], "stdin": request.stdin,
-        "compile_timeout": 10_000, "run_timeout": 3_000,
-        "compile_memory_limit": 128_000_000, "run_memory_limit": 128_000_000,
-    }
-    try:
-        async with httpx.AsyncClient(timeout=18.0) as client:
-            response = await client.post(runner_url, headers=headers, json=payload)
-        if response.status_code >= 400:
-            logger.warning("Code runner failed: status=%s", response.status_code)
-            raise HTTPException(status_code=502, detail="The online compiler rejected this run. Check the sandbox configuration and retry.")
-        result = response.json()
-        run = result.get("run", {})
-        compile_result = result.get("compile", {})
-        output = run.get("output") or compile_result.get("output") or "Program finished with no output."
-        return {"output": str(output)[:12_000], "exitCode": run.get("code"), "signal": run.get("signal"), "language": result.get("language", runtimes[language])}
-    except HTTPException:
-        raise
-    except httpx.TimeoutException:
-        raise HTTPException(status_code=504, detail="The online compiler timed out. Simplify the program and retry.")
-    except httpx.HTTPError:
-        raise HTTPException(status_code=502, detail="Could not reach the online compiler sandbox.")
-
-
 @app.post("/api/ai-tutor/chat")
 @app.post("/ai-tutor/chat")
 async def ai_tutor_chat(request: TutorRequest):
