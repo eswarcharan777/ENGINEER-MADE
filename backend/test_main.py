@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from main import app, require_admin
+from main import _github_repository_parts, app, require_admin
 
 
 client = TestClient(app)
@@ -14,6 +14,11 @@ def test_health():
     response = client.get("/api/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_github_repository_parser_accepts_page_and_clone_urls():
+    assert _github_repository_parts("https://github.com/eswarcharan777/under-the-woods") == ("eswarcharan777", "under-the-woods")
+    assert _github_repository_parts("https://github.com/eswarcharan777/under-the-woods.git") == ("eswarcharan777", "under-the-woods")
 
 
 def test_paths_and_lesson_lookup():

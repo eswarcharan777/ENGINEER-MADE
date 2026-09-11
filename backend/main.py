@@ -623,7 +623,10 @@ async def ai_tutor_vision(
 
 
 def _github_repository_parts(url: str) -> tuple[str, str]:
-    match = re.fullmatch(r"https?://(?:www\.)?github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+?)/?", url.strip())
+    match = re.fullmatch(
+        r"https?://(?:www\.)?github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+?)(?:\.git)?/?",
+        url.strip(),
+    )
     if not match:
         raise HTTPException(status_code=400, detail="Enter a public GitHub repository URL, for example https://github.com/user/repository")
     return match.group(1), match.group(2)
@@ -633,7 +636,7 @@ def _github_repository_parts(url: str) -> tuple[str, str]:
 async def github_repository_analysis(request: RepositoryRequest, _user: dict = Depends(require_user)):
     """Fetch public GitHub metadata and score an engineering portfolio transparently."""
     owner, repository = _github_repository_parts(request.url)
-    headers = {"Accept": "application/vnd.github+json", "User-Agent": "Engineer-Kingdom"}
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "Engineer-Made"}
     token = os.getenv("GITHUB_TOKEN", "").strip()
     if token:
         headers["Authorization"] = f"Bearer {token}"
