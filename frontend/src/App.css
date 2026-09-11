@@ -25,6 +25,8 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
 }
+.flashcard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.25rem 0}.flashcard-grid article{padding:1rem;border:1px solid #5d4a94;border-radius:14px;background:#211d39}.flashcard-grid p{margin:.65rem 0 0}.goal-presets{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}.goal-presets button{font-size:.82rem}.note-paper{cursor:pointer}.note-paper:focus{outline:2px solid #f0c95b}.resume-preview a{display:block;margin:.7rem 0;color:inherit;text-decoration:none}.resume-preview a small{display:block;overflow-wrap:anywhere;margin-top:.25rem}.voice-button.is-listening{animation:mic-pulse 1s ease-in-out infinite;background:#d64dd0!important;color:#fff}@keyframes mic-pulse{50%{transform:scale(1.08);box-shadow:0 0 0 10px rgba(214,77,208,.16)}}.heatmap-grid button{margin-top:.7rem;padding:.45rem .7rem;font-size:.78rem}@media(max-width:720px){.flashcard-grid{grid-template-columns:1fr}}
+.study-activity{margin:1.5rem 0;padding:1.5rem;border:1px solid #303850;border-radius:18px;background:#151a2c}.study-activity-grid{display:grid;grid-template-columns:repeat(12,18px);grid-auto-rows:18px;grid-auto-flow:column;gap:5px;margin:1rem 0}.study-activity-grid i{border:1px solid #343b52;border-radius:4px;background:#20263a}.study-activity-grid i.active{background:#7c4dff;border-color:#9a7cff;box-shadow:0 0 10px rgba(124,77,255,.5)}.study-activity small{color:#9eabc5}
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
