@@ -133,7 +133,7 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-canvas { position:fixed; inset:0; width:100vw; height:100vh; z-index:0; opacity:.9; pointer-events:none; }
 .kingdom-loading { position:fixed; inset:0; z-index:0; pointer-events:none; }
 .kingdom-orbit-system { position:absolute; z-index:1; top:50%; left:75%; width:min(52vw,760px); aspect-ratio:1; transform:translate(-50%,-50%) perspective(1100px) rotateX(58deg) rotateZ(-12deg); transform-style:preserve-3d; pointer-events:none; opacity:.92; }
-.kingdom-orbit-system { top:51%; left:75%; width:clamp(390px,42vw,690px); aspect-ratio:3 / 4; transform:translate(-50%,-50%) perspective(1200px); opacity:1; }
+.kingdom-orbit-system { top:51%; left:75%; width:min(30vw,460px); height:min(74vh,690px); aspect-ratio:auto; transform:translate(-50%,-50%) perspective(1200px); opacity:1; }
 .kingdom-asteroid { position:absolute; inset:35%; border-radius:46% 54% 51% 49% / 52% 43% 57% 48%; background:radial-gradient(circle at 30% 23%,#fff4bf 0 2%,transparent 5%),radial-gradient(circle at 62% 68%,rgba(35,17,39,.8) 0 5%,transparent 7%),radial-gradient(circle at 42% 54%,rgba(101,53,42,.78) 0 4%,transparent 6%),radial-gradient(circle at 32% 25%,#f6d879 0 9%,#c78535 24%,#75432f 49%,#3b2944 72%,#131326 100%); box-shadow:inset -24px -25px 34px rgba(7,5,16,.8),inset 13px 10px 24px rgba(255,229,144,.52),0 0 40px rgba(216,167,43,.42); transform:translateZ(80px) rotateX(-58deg) rotateZ(16deg); animation:kingdom-asteroid-spin 9s linear infinite; }
 .kingdom-asteroid::before { content:''; position:absolute; inset:18% 8%; border:2px solid rgba(115,221,232,.65); border-radius:50%; transform:rotate(-28deg) skewX(-10deg); box-shadow:0 0 12px rgba(115,221,232,.5); }
 .kingdom-asteroid::after { content:''; position:absolute; width:22%; height:17%; left:23%; top:21%; border-radius:50%; background:rgba(255,241,181,.55); filter:blur(5px); }
@@ -142,8 +142,8 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-crystal::before { content:''; position:absolute; inset:17% 11%; z-index:-1; border-radius:50%; background:radial-gradient(circle,rgba(35,181,255,.35),rgba(216,167,43,.16) 35%,transparent 72%); filter:blur(18px); }
 .kingdom-crystal::after { content:''; position:absolute; left:15%; right:15%; bottom:10%; height:7%; z-index:-1; background:radial-gradient(ellipse,rgba(231,190,83,.9),transparent 70%); filter:blur(9px); }
 @keyframes kingdom-crystal-turn { 0%,100% { transform:translateZ(86px) rotateX(-58deg) rotateY(-12deg) rotateZ(8deg) scale(.96); } 50% { transform:translateZ(118px) rotateX(-58deg) rotateY(180deg) rotateZ(15deg) scale(1.04); } }
-.kingdom-crystal { inset:2% 8%; transform:translateZ(80px) rotateY(-12deg) rotateZ(2deg); animation:kingdom-crystal-float 10s ease-in-out infinite; }
-.kingdom-crystal img { filter:contrast(1.12) saturate(1.08); transform:scale(1.02); }
+.kingdom-crystal { inset:0; transform:translateZ(80px) rotateY(-12deg) rotateZ(2deg); animation:kingdom-crystal-float 10s ease-in-out infinite; }
+.kingdom-crystal img { filter:contrast(1.12) saturate(1.08); transform:scale(.93); object-fit:contain; }
 .kingdom-crystal::before { inset:15% 8%; background:radial-gradient(circle,rgba(46,182,255,.3),rgba(216,167,43,.13) 38%,transparent 72%); }
 .kingdom-crystal::after { bottom:5%; }
 .crystal-particle { position:absolute; width:7px; height:7px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#fffbe8,#f6c95c 36%,#29cbe8 72%); box-shadow:0 0 14px rgba(105,218,255,.95),0 0 28px rgba(231,190,83,.7); animation:crystal-particle-drift 6s ease-in-out infinite; }
@@ -951,7 +951,7 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
   .kingdom-hero .hero-content { margin-left: 0; margin-right: 0; text-align: center; }
   .kingdom-hero .hero-content h1, .kingdom-hero .hero-content p { margin-left: auto; margin-right: auto; }
   .kingdom-hero .hero-cta, .kingdom-hero .hero-learners { justify-content: center; }
-  .kingdom-orbit-system { left:50%; top:62%; width:125vw; opacity:.42; }
+  .kingdom-orbit-system { left:50%; top:62%; width:min(74vw,330px); height:min(58vh,500px); opacity:.5; }
   .auth-buttons { display: none; }
   .dashboard-nav-cta { display: none; }
   .navbar-links.mobile-open .mobile-dashboard-link { display: block; }
