@@ -130,6 +130,9 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-canvas { position:fixed; inset:0; width:100vw; height:100vh; z-index:0; opacity:.9; pointer-events:none; }
 .kingdom-loading { position:fixed; inset:0; z-index:0; pointer-events:none; }
 .kingdom-orbit-system { position:absolute; z-index:1; top:50%; left:68%; width:min(52vw,760px); aspect-ratio:1; transform:translate(-50%,-50%) perspective(1100px) rotateX(58deg) rotateZ(-12deg); transform-style:preserve-3d; pointer-events:none; opacity:.92; }
+.kingdom-asteroid { position:absolute; inset:35%; border-radius:46% 54% 51% 49% / 52% 43% 57% 48%; background:radial-gradient(circle at 32% 25%,#fff0ad 0 3%,#e3b94d 14%,#986324 43%,#3b254e 72%,#151125 100%); box-shadow:inset -20px -22px 30px rgba(7,5,16,.68),inset 12px 10px 22px rgba(255,229,144,.42),0 0 40px rgba(216,167,43,.42); transform:translateZ(80px) rotateZ(16deg); animation:kingdom-asteroid-spin 9s linear infinite; }
+.kingdom-asteroid::before { content:''; position:absolute; inset:18% 8%; border:2px solid rgba(115,221,232,.65); border-radius:50%; transform:rotate(-28deg) skewX(-10deg); box-shadow:0 0 12px rgba(115,221,232,.5); }
+.kingdom-asteroid::after { content:''; position:absolute; width:22%; height:17%; left:23%; top:21%; border-radius:50%; background:rgba(255,241,181,.55); filter:blur(5px); }
 .kingdom-orbit-ring { position:absolute; inset:0; border:1px solid rgba(231,190,83,.55); border-radius:50%; box-shadow:0 0 22px rgba(216,167,43,.15),inset 0 0 18px rgba(216,167,43,.08); transform-style:preserve-3d; }
 .kingdom-orbit-ring::after { content:''; position:absolute; inset:8%; border-radius:50%; border:1px dashed rgba(115,221,232,.32); transform:translateZ(18px); }
 .kingdom-orbit-ring--outer { transform:translateZ(12px) rotateY(12deg); animation:kingdom-public-orbit 18s linear infinite; }
@@ -146,6 +149,7 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 @keyframes kingdom-public-orbit { to { transform:translateZ(12px) rotateY(12deg) rotateZ(360deg); } }
 @keyframes kingdom-public-orbit-reverse { to { transform:translateZ(34px) rotateY(-30deg) rotateZ(-360deg); } }
 @keyframes kingdom-public-core { 50% { transform:translateZ(96px) scale(1.18); opacity:.72; } }
+@keyframes kingdom-asteroid-spin { to { transform:translateZ(80px) rotateZ(376deg) rotateY(360deg); } }
 @keyframes kingdom-public-node { 50% { transform:translateZ(95px) scale(1.3); } }
 @keyframes kingdom-public-circuit { 50% { opacity:1; filter:brightness(1.7); } }
 .kingdom-hero .hero-content { max-width: 760px; margin-right: min(30vw,430px); text-align:left; }

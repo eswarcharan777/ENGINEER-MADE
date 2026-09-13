@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon, PlayIcon, HeadphonesIcon, BookIcon, TrendingUpIcon, UsersIcon, AwardIcon } from '../components/Icons';
 import axios from 'axios';
 
-const Kingdom3D = React.lazy(() => import('../components/Kingdom3D'));
 const API = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000');
 
 function Home() {
@@ -16,11 +15,9 @@ function Home() {
 
   return (
     <>
-      <Suspense fallback={<div className="globe-fallback kingdom-loading" />}>
-        <Kingdom3D />
-      </Suspense>
       <section className="hero hero-globe kingdom-hero">
         <div className="kingdom-orbit-system" aria-hidden="true">
+          <span className="kingdom-asteroid" />
           <span className="kingdom-orbit-ring kingdom-orbit-ring--outer" />
           <span className="kingdom-orbit-ring kingdom-orbit-ring--middle" />
           <span className="kingdom-orbit-ring kingdom-orbit-ring--inner" />
