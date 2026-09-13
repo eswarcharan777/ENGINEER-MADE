@@ -20,6 +20,17 @@ function Home() {
         <Kingdom3D />
       </Suspense>
       <section className="hero hero-globe kingdom-hero">
+        <div className="kingdom-orbit-system" aria-hidden="true">
+          <span className="kingdom-orbit-ring kingdom-orbit-ring--outer" />
+          <span className="kingdom-orbit-ring kingdom-orbit-ring--middle" />
+          <span className="kingdom-orbit-ring kingdom-orbit-ring--inner" />
+          <span className="kingdom-orbit-node kingdom-orbit-node--one" />
+          <span className="kingdom-orbit-node kingdom-orbit-node--two" />
+          <span className="kingdom-orbit-node kingdom-orbit-node--three" />
+          <span className="kingdom-circuit-line kingdom-circuit-line--one" />
+          <span className="kingdom-circuit-line kingdom-circuit-line--two" />
+          <span className="kingdom-core-glow" />
+        </div>
         <div className="hero-content">
           <div className="hero-badge">
             <span className="dot"></span>
