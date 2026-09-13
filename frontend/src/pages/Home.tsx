@@ -24,6 +24,10 @@ function Home() {
           <span className="kingdom-orbit-node kingdom-orbit-node--one" />
           <span className="kingdom-orbit-node kingdom-orbit-node--two" />
           <span className="kingdom-orbit-node kingdom-orbit-node--three" />
+          <span className="kingdom-planet kingdom-planet--outer" />
+          <span className="kingdom-planet kingdom-planet--middle" />
+          <span className="kingdom-planet kingdom-planet--inner" />
+          <span className="kingdom-planet kingdom-planet--close" />
           <span className="kingdom-circuit-line kingdom-circuit-line--one" />
           <span className="kingdom-circuit-line kingdom-circuit-line--two" />
           <span className="kingdom-core-glow" />

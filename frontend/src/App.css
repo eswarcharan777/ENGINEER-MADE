@@ -126,10 +126,11 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .kingdom-hero { min-height: 115vh; overflow: visible; }
+.kingdom-hero::before { content:''; position:absolute; inset:0; z-index:0; transform:none; width:auto; height:auto; background-image:radial-gradient(circle at 14% 22%,rgba(255,218,125,.75) 0 1px,transparent 2px),radial-gradient(circle at 77% 18%,rgba(115,221,232,.65) 0 1px,transparent 2px),radial-gradient(circle at 62% 74%,rgba(255,218,125,.55) 0 1px,transparent 2px),radial-gradient(circle at 91% 63%,rgba(115,221,232,.6) 0 1px,transparent 2px),radial-gradient(circle at 38% 88%,rgba(255,255,255,.48) 0 1px,transparent 2px); background-size:320px 260px,410px 330px,270px 220px,360px 300px,500px 390px; opacity:.28; animation:kingdom-star-drift 24s linear infinite; pointer-events:none; }
 .kingdom-hero::after { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(90deg,rgba(8,6,4,.58),rgba(8,6,4,.04) 55%,rgba(8,6,4,.18)); }
 .kingdom-canvas { position:fixed; inset:0; width:100vw; height:100vh; z-index:0; opacity:.9; pointer-events:none; }
 .kingdom-loading { position:fixed; inset:0; z-index:0; pointer-events:none; }
-.kingdom-orbit-system { position:absolute; z-index:1; top:50%; left:68%; width:min(52vw,760px); aspect-ratio:1; transform:translate(-50%,-50%) perspective(1100px) rotateX(58deg) rotateZ(-12deg); transform-style:preserve-3d; pointer-events:none; opacity:.92; }
+.kingdom-orbit-system { position:absolute; z-index:1; top:50%; left:75%; width:min(52vw,760px); aspect-ratio:1; transform:translate(-50%,-50%) perspective(1100px) rotateX(58deg) rotateZ(-12deg); transform-style:preserve-3d; pointer-events:none; opacity:.92; }
 .kingdom-asteroid { position:absolute; inset:35%; border-radius:46% 54% 51% 49% / 52% 43% 57% 48%; background:radial-gradient(circle at 32% 25%,#fff0ad 0 3%,#e3b94d 14%,#986324 43%,#3b254e 72%,#151125 100%); box-shadow:inset -20px -22px 30px rgba(7,5,16,.68),inset 12px 10px 22px rgba(255,229,144,.42),0 0 40px rgba(216,167,43,.42); transform:translateZ(80px) rotateZ(16deg); animation:kingdom-asteroid-spin 9s linear infinite; }
 .kingdom-asteroid::before { content:''; position:absolute; inset:18% 8%; border:2px solid rgba(115,221,232,.65); border-radius:50%; transform:rotate(-28deg) skewX(-10deg); box-shadow:0 0 12px rgba(115,221,232,.5); }
 .kingdom-asteroid::after { content:''; position:absolute; width:22%; height:17%; left:23%; top:21%; border-radius:50%; background:rgba(255,241,181,.55); filter:blur(5px); }
@@ -143,6 +144,17 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-orbit-node--one { top:8%; left:48%; }
 .kingdom-orbit-node--two { right:7%; top:45%; animation-delay:-1.2s; }
 .kingdom-orbit-node--three { bottom:12%; left:21%; animation-delay:-2.2s; }
+.kingdom-planet { position:absolute; left:50%; top:50%; width:clamp(18px,2.1vw,34px); aspect-ratio:1; border-radius:50%; transform-style:preserve-3d; box-shadow:inset -8px -6px 10px rgba(8,5,18,.7),inset 4px 3px 7px rgba(255,238,178,.65),0 0 16px rgba(244,195,82,.55); z-index:4; }
+.kingdom-planet::after { content:''; position:absolute; inset:-12%; border-radius:50%; border:1px solid rgba(255,228,141,.28); transform:rotateX(65deg) rotateZ(18deg); }
+.kingdom-planet--outer { background:radial-gradient(circle at 32% 28%,#fff3bb 0 8%,#e5a942 25%,#8d4c38 59%,#281c35 100%); animation:kingdom-planet-outer 18s linear infinite; }
+.kingdom-planet--middle { width:clamp(15px,1.7vw,27px); background:radial-gradient(circle at 28% 24%,#eaf8d1 0 7%,#79bfad 26%,#275b68 60%,#101d37 100%); animation:kingdom-planet-middle 13s linear infinite reverse; }
+.kingdom-planet--inner { width:clamp(12px,1.35vw,22px); background:radial-gradient(circle at 30% 25%,#fff1b0 0 9%,#db6d47 28%,#6a2843 66%,#1b122d 100%); animation:kingdom-planet-inner 9s linear infinite; }
+.kingdom-planet--close { width:clamp(10px,1.1vw,18px); background:radial-gradient(circle at 32% 25%,#e5fbff 0 10%,#55c7d1 28%,#24517a 68%,#10172e 100%); animation:kingdom-planet-close 6.5s linear infinite reverse; }
+@keyframes kingdom-planet-outer { from { transform:rotate(0deg) translateX(min(25vw,360px)) rotate(0deg) translateZ(22px); } to { transform:rotate(360deg) translateX(min(25vw,360px)) rotate(-360deg) translateZ(22px); } }
+@keyframes kingdom-planet-middle { from { transform:rotate(210deg) translateX(min(19vw,270px)) rotate(-210deg) translateZ(42px); } to { transform:rotate(-150deg) translateX(min(19vw,270px)) rotate(150deg) translateZ(42px); } }
+@keyframes kingdom-planet-inner { from { transform:rotate(75deg) translateX(min(12vw,175px)) rotate(-75deg) translateZ(60px); } to { transform:rotate(435deg) translateX(min(12vw,175px)) rotate(-435deg) translateZ(60px); } }
+@keyframes kingdom-planet-close { from { transform:rotate(280deg) translateX(min(7vw,105px)) rotate(-280deg) translateZ(76px); } to { transform:rotate(-80deg) translateX(min(7vw,105px)) rotate(80deg) translateZ(76px); } }
+@keyframes kingdom-star-drift { to { background-position:160px 120px,-180px 140px,120px -160px,-130px 110px,180px -100px; } }
 .kingdom-circuit-line { position:absolute; height:2px; transform-origin:left center; background:linear-gradient(90deg,rgba(115,221,232,0),rgba(115,221,232,.75),rgba(255,214,104,.1)); box-shadow:0 0 8px rgba(115,221,232,.65); opacity:.7; animation:kingdom-public-circuit 3.2s ease-in-out infinite; }
 .kingdom-circuit-line--one { width:34%; top:31%; left:16%; transform:rotate(18deg) translateZ(44px); }
 .kingdom-circuit-line--two { width:28%; top:67%; left:49%; transform:rotate(-22deg) translateZ(52px); animation-delay:-1.6s; }
