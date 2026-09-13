@@ -9,12 +9,12 @@ function Login() {
   const [notice, setNotice] = useState('');
   const [formLoading, setFormLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const { user, login, loginWithGoogle, sendPasswordReset } = useAuth();
+  const { user, loading, profile, login, loginWithGoogle, sendPasswordReset } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate('/profile', { replace: true });
-  }, [user, navigate]);
+    if (!loading && user) navigate(profile?.careerPathId ? '/dashboard' : '/profile', { replace: true });
+  }, [user, loading, profile?.careerPathId, navigate]);
 
   const googleError = (err: any) => {
     const code = err?.code || '';
@@ -31,7 +31,6 @@ function Login() {
     setFormLoading(true);
     try {
       await login(email, password);
-      navigate('/profile');
     } catch (err: any) {
       setError(err.message?.includes('invalid') ? 'Invalid email or password' : 'Failed to login');
     }

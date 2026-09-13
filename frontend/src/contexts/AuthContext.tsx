@@ -71,6 +71,11 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
+const profileCacheKey = (uid: string) => `engineer-made-profile:${uid}`;
+const readCachedProfile = (uid: string): LearnerProfile | null => {
+  try { const saved = window.localStorage.getItem(profileCacheKey(uid)); return saved ? JSON.parse(saved) as LearnerProfile : null; } catch { return null; }
+};
+
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -114,7 +119,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const userDoc = await getDoc(userRef);
           if (userDoc.exists()) {
             setCompletedLessons(userDoc.data().completedLessons || []);
-            setProfile(userDoc.data().profile || null);
+            const savedProfile = userDoc.data().profile || readCachedProfile(u.uid);
+            setProfile(savedProfile);
+            if (savedProfile) window.localStorage.setItem(profileCacheKey(u.uid), JSON.stringify(savedProfile));
             setBookmarks(Array.isArray(userDoc.data().savedBookmarks) ? userDoc.data().savedBookmarks : []);
             setAssessmentAttempts(Array.isArray(userDoc.data().assessmentAttempts) ? userDoc.data().assessmentAttempts : []);
             await updateDoc(userRef, { lastActiveAt: serverTimestamp() });
@@ -124,16 +131,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               completedLessons: [], createdAt: serverTimestamp(), lastActiveAt: serverTimestamp(),
             });
             setCompletedLessons([]);
-            setProfile(null);
+            setProfile(readCachedProfile(u.uid));
             setBookmarks([]);
             setAssessmentAttempts([]);
           }
         } catch (error) {
           console.error('Could not load learner profile:', error);
+          setProfile(readCachedProfile(u.uid));
         }
       } else {
         setCompletedLessons([]);
-        setProfile(null);
+        setProfile(u ? readCachedProfile(u.uid) : null);
         setBookmarks([]);
         setAssessmentAttempts([]);
       }
@@ -189,6 +197,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function login(email: string, password: string) {
     if (!firebaseAuth) throw new Error('Auth not configured');
+    setLoading(true);
+    setProfile(null);
     const cred = await signInWithEmailAndPassword(firebaseAuth as Auth, email, password);
     setUser(cred.user);
   }
@@ -232,7 +242,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function saveProfile(nextProfile: LearnerProfile) {
-    if (!user || !firebaseDb) throw new Error('Please sign in before saving your profile.');
+    if (!user) throw new Error('Please sign in before saving your profile.');
+    window.localStorage.setItem(profileCacheKey(user.uid), JSON.stringify(nextProfile));
+    if (!firebaseDb) { setProfile(nextProfile); return; }
     await setDoc(doc(firebaseDb as Firestore, 'users', user.uid), {
       name: nextProfile.name,
       email: nextProfile.email,

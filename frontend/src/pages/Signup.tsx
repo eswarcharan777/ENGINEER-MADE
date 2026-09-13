@@ -9,12 +9,12 @@ function Signup() {
   const [error, setError] = useState('');
   const [formLoading, setFormLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const { user, signup, loginWithGoogle } = useAuth();
+  const { user, loading, profile, signup, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate('/profile', { replace: true });
-  }, [user, navigate]);
+    if (!loading && user) navigate(profile?.careerPathId ? '/dashboard' : '/profile', { replace: true });
+  }, [user, loading, profile?.careerPathId, navigate]);
 
   const googleError = (err: any) => {
     const code = err?.code || '';
@@ -32,7 +32,6 @@ function Signup() {
     setFormLoading(true);
     try {
       await signup(email, password, name);
-      navigate('/profile');
     } catch (err: any) {
       if (err.message?.includes('already-in-use')) setError('Email already registered');
       else setError('Failed to create account');
