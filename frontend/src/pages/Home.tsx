@@ -16,6 +16,9 @@ function Home() {
   return (
     <>
       <section className="hero hero-globe kingdom-hero">
+        <div className="crystal-space" aria-hidden="true">
+          <i /><i /><i /><i /><i /><i /><i /><i />
+        </div>
         <div className="kingdom-orbit-system" aria-hidden="true">
           <span className="kingdom-crystal">
             <img src="/assets/crystal-circuit-hero.png" alt="" />
@@ -26,6 +29,11 @@ function Home() {
           <span className="crystal-particle crystal-particle--four" />
           <span className="crystal-particle crystal-particle--five" />
           <span className="crystal-particle crystal-particle--six" />
+          <span className="crystal-mote crystal-mote--one" />
+          <span className="crystal-mote crystal-mote--two" />
+          <span className="crystal-mote crystal-mote--three" />
+          <span className="crystal-mote crystal-mote--four" />
+          <span className="crystal-mote crystal-mote--five" />
         </div>
         <div className="hero-content">
           <div className="hero-badge">
