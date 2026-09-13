@@ -515,7 +515,17 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .dashboard-path-card p { color: var(--text-muted); font-size: .85rem; }
 
 /* Focused learner roadmap dashboard */
-.dashboard-v2 { background:radial-gradient(circle at 92% 5%,rgba(120,52,193,.2),transparent 29%),#080b18; }
+.dashboard-v2 { position:relative; isolation:isolate; overflow:hidden; background:radial-gradient(circle at 50% 0%,rgba(99,62,183,.22),transparent 34%),linear-gradient(150deg,#080915 0%,#130e25 52%,#090b18 100%); }
+.dashboard-v2::before,.dashboard-v2::after { content:''; position:fixed; pointer-events:none; z-index:-1; inset:0; }
+.dashboard-v2::before { opacity:.56; background:radial-gradient(ellipse at 50% 108%,rgba(130,75,244,.28),transparent 33%),radial-gradient(circle at 14% 29%,rgba(242,195,83,.48) 0 3px,transparent 4px),radial-gradient(circle at 77% 20%,rgba(249,202,99,.36) 0 4px,transparent 5px),radial-gradient(circle at 89% 68%,rgba(249,202,99,.24) 0 3px,transparent 4px),linear-gradient(90deg,transparent 0 12%,rgba(187,140,58,.11) 12.1% 12.5%,transparent 12.6% 28%,rgba(136,91,222,.12) 28.1% 28.35%,transparent 28.5% 71%,rgba(187,140,58,.1) 71.1% 71.4%,transparent 71.5%); background-size:auto,220px 220px,310px 310px,260px 260px,100% 100%; animation:kingdom-orbit 22s linear infinite,kingdom-circuit 9s ease-in-out infinite; }
+.dashboard-v2::after { inset:auto 0 0; height:58vh; opacity:.42; transform-origin:bottom center; background:linear-gradient(90deg,transparent 0 5%,rgba(15,10,31,.9) 5% 11%,transparent 11% 13%,rgba(15,10,31,.92) 13% 20%,transparent 20% 25%,rgba(15,10,31,.92) 25% 36%,transparent 36% 39%,rgba(15,10,31,.94) 39% 61%,transparent 61% 64%,rgba(15,10,31,.92) 64% 74%,transparent 74% 77%,rgba(15,10,31,.9) 77% 91%,transparent 91%),linear-gradient(0deg,rgba(8,8,22,.94),transparent 75%); clip-path:polygon(0 100%,0 44%,8% 52%,11% 24%,14% 52%,20% 38%,24% 57%,31% 29%,36% 58%,44% 16%,50% 0,56% 16%,64% 58%,69% 29%,76% 57%,80% 38%,86% 52%,89% 24%,92% 52%,100% 44%,100% 100%); animation:kingdom-float 12s ease-in-out infinite; }
+.dashboard-v2 .dashboard-workspace { position:relative; z-index:1; background:linear-gradient(90deg,rgba(8,9,21,.38),rgba(8,9,21,.08) 50%,rgba(8,9,21,.38)); }
+.dashboard-v2 .dashboard-sidebar { background:linear-gradient(180deg,rgba(14,13,40,.98),rgba(10,13,31,.98)); border-right-color:rgba(211,168,76,.25); }
+.dashboard-v2 .dashboard-topbar { background:rgba(10,10,30,.76); border-bottom-color:rgba(211,168,76,.22); }
+@keyframes kingdom-orbit { from{background-position:center,0 0,0 0,0 0,0 0} to{background-position:center,220px 220px,-310px 310px,260px -260px,0 0} }
+@keyframes kingdom-circuit { 50%{filter:brightness(1.25) saturate(1.15)} }
+@keyframes kingdom-float { 50%{transform:translateY(-18px) scale(1.015);filter:drop-shadow(0 -20px 38px rgba(145,93,255,.2))} }
+@media (prefers-reduced-motion:reduce){.dashboard-v2::before,.dashboard-v2::after{animation:none}}
 .dashboard-v2 .dashboard-page { width:100%; max-width:none; margin:0; }
 .sidebar-change-path { display:inline-flex; width:max-content; margin-top:.45rem; padding:.38rem .65rem; border:1px solid rgba(167,139,250,.42); border-radius:999px; color:#c4b5fd; font-size:.72rem; font-weight:700; text-decoration:none; text-transform:none; }
 .dashboard-v2-hero { padding:2rem 2.2rem; margin-bottom:1.25rem; border:1px solid #303650; border-radius:20px; background:linear-gradient(110deg,rgba(63,37,88,.72),rgba(24,34,62,.8)); }
