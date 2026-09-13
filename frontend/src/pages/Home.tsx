@@ -35,22 +35,22 @@ function Home() {
         <div className="hero-content">
           <div className="hero-badge">
             <span className="dot"></span>
-            ENTER THE ROYAL ACADEMY
+            IDEAS POWER WORLDS
           </div>
           <h1>
-            Build Your Legacy in the<br />
-            <span className="gradient-text">Engineer Made</span>
+            <span className="gradient-text">Engineer</span><br />
+            <span className="gradient-text">Made</span>
           </h1>
           <p>
-            Enter a living 3D citadel of engineering knowledge. Master your discipline,
-            build real projects, and earn your place among tomorrow's great engineers.
+            Turn curiosity into capability.<br />
+            Learn. Build. Create what’s next.
           </p>
           <div className="hero-cta">
             <Link to="/paths" className="btn btn-primary">
-              Explore learning paths <ArrowRightIcon />
+              Start Learning <ArrowRightIcon />
             </Link>
             <Link to="/signup" className="btn btn-secondary">
-              Join Free
+              Explore Paths
             </Link>
           </div>
           <div className="hero-learners">
