@@ -20,19 +20,12 @@ function Home() {
           <span className="kingdom-crystal">
             <img src="/assets/crystal-circuit-hero.png" alt="" />
           </span>
-          <span className="kingdom-orbit-ring kingdom-orbit-ring--outer" />
-          <span className="kingdom-orbit-ring kingdom-orbit-ring--middle" />
-          <span className="kingdom-orbit-ring kingdom-orbit-ring--inner" />
-          <span className="kingdom-orbit-node kingdom-orbit-node--one" />
-          <span className="kingdom-orbit-node kingdom-orbit-node--two" />
-          <span className="kingdom-orbit-node kingdom-orbit-node--three" />
-          <span className="kingdom-planet kingdom-planet--outer" />
-          <span className="kingdom-planet kingdom-planet--middle" />
-          <span className="kingdom-planet kingdom-planet--inner" />
-          <span className="kingdom-planet kingdom-planet--close" />
-          <span className="kingdom-circuit-line kingdom-circuit-line--one" />
-          <span className="kingdom-circuit-line kingdom-circuit-line--two" />
-          <span className="kingdom-core-glow" />
+          <span className="crystal-particle crystal-particle--one" />
+          <span className="crystal-particle crystal-particle--two" />
+          <span className="crystal-particle crystal-particle--three" />
+          <span className="crystal-particle crystal-particle--four" />
+          <span className="crystal-particle crystal-particle--five" />
+          <span className="crystal-particle crystal-particle--six" />
         </div>
         <div className="hero-content">
           <div className="hero-badge">

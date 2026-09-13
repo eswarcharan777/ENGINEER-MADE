@@ -45,9 +45,9 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 /* ── Navbar ─────────────────────────────────────────────── */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(8, 6, 4, 0.9);
+  background: rgba(3, 13, 25, 0.92);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(103, 178, 227, 0.25);
   padding: 0 2rem; height: 72px;
   display: flex; align-items: center; justify-content: space-between;
 }
@@ -64,10 +64,10 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
   display: flex; align-items: center; gap: 2rem; list-style: none;
 }
 .navbar-links a {
-  text-decoration: none; color: var(--text-secondary);
+  text-decoration: none; color: #c6d9e8;
   font-weight: 500; font-size: 0.95rem; transition: color 0.2s; position: relative;
 }
-.navbar-links a:hover, .navbar-links a.active { color: var(--text-primary); }
+.navbar-links a:hover, .navbar-links a.active { color: #ffe5a0; }
 .navbar-links a.active::after {
   content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
   height: 2px; background: var(--gradient-1); border-radius: 2px;
@@ -133,6 +133,7 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-canvas { position:fixed; inset:0; width:100vw; height:100vh; z-index:0; opacity:.9; pointer-events:none; }
 .kingdom-loading { position:fixed; inset:0; z-index:0; pointer-events:none; }
 .kingdom-orbit-system { position:absolute; z-index:1; top:50%; left:75%; width:min(52vw,760px); aspect-ratio:1; transform:translate(-50%,-50%) perspective(1100px) rotateX(58deg) rotateZ(-12deg); transform-style:preserve-3d; pointer-events:none; opacity:.92; }
+.kingdom-orbit-system { top:51%; left:75%; width:clamp(390px,42vw,690px); aspect-ratio:3 / 4; transform:translate(-50%,-50%) perspective(1200px); opacity:1; }
 .kingdom-asteroid { position:absolute; inset:35%; border-radius:46% 54% 51% 49% / 52% 43% 57% 48%; background:radial-gradient(circle at 30% 23%,#fff4bf 0 2%,transparent 5%),radial-gradient(circle at 62% 68%,rgba(35,17,39,.8) 0 5%,transparent 7%),radial-gradient(circle at 42% 54%,rgba(101,53,42,.78) 0 4%,transparent 6%),radial-gradient(circle at 32% 25%,#f6d879 0 9%,#c78535 24%,#75432f 49%,#3b2944 72%,#131326 100%); box-shadow:inset -24px -25px 34px rgba(7,5,16,.8),inset 13px 10px 24px rgba(255,229,144,.52),0 0 40px rgba(216,167,43,.42); transform:translateZ(80px) rotateX(-58deg) rotateZ(16deg); animation:kingdom-asteroid-spin 9s linear infinite; }
 .kingdom-asteroid::before { content:''; position:absolute; inset:18% 8%; border:2px solid rgba(115,221,232,.65); border-radius:50%; transform:rotate(-28deg) skewX(-10deg); box-shadow:0 0 12px rgba(115,221,232,.5); }
 .kingdom-asteroid::after { content:''; position:absolute; width:22%; height:17%; left:23%; top:21%; border-radius:50%; background:rgba(255,241,181,.55); filter:blur(5px); }
@@ -141,6 +142,14 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 .kingdom-crystal::before { content:''; position:absolute; inset:17% 11%; z-index:-1; border-radius:50%; background:radial-gradient(circle,rgba(35,181,255,.35),rgba(216,167,43,.16) 35%,transparent 72%); filter:blur(18px); }
 .kingdom-crystal::after { content:''; position:absolute; left:15%; right:15%; bottom:10%; height:7%; z-index:-1; background:radial-gradient(ellipse,rgba(231,190,83,.9),transparent 70%); filter:blur(9px); }
 @keyframes kingdom-crystal-turn { 0%,100% { transform:translateZ(86px) rotateX(-58deg) rotateY(-12deg) rotateZ(8deg) scale(.96); } 50% { transform:translateZ(118px) rotateX(-58deg) rotateY(180deg) rotateZ(15deg) scale(1.04); } }
+.kingdom-crystal { inset:2% 8%; transform:translateZ(80px) rotateY(-12deg) rotateZ(2deg); animation:kingdom-crystal-float 10s ease-in-out infinite; }
+.kingdom-crystal img { filter:contrast(1.12) saturate(1.08); transform:scale(1.02); }
+.kingdom-crystal::before { inset:15% 8%; background:radial-gradient(circle,rgba(46,182,255,.3),rgba(216,167,43,.13) 38%,transparent 72%); }
+.kingdom-crystal::after { bottom:5%; }
+.crystal-particle { position:absolute; width:7px; height:7px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#fffbe8,#f6c95c 36%,#29cbe8 72%); box-shadow:0 0 14px rgba(105,218,255,.95),0 0 28px rgba(231,190,83,.7); animation:crystal-particle-drift 6s ease-in-out infinite; }
+.crystal-particle--one { top:14%; left:18%; animation-delay:-.8s; }.crystal-particle--two { top:28%; right:9%; width:10px; height:10px; animation-delay:-2.1s; }.crystal-particle--three { bottom:21%; left:7%; width:5px; height:5px; animation-delay:-3.4s; }.crystal-particle--four { bottom:10%; right:18%; width:8px; height:8px; animation-delay:-1.6s; }.crystal-particle--five { top:48%; left:2%; width:5px; height:5px; animation-delay:-4.5s; }.crystal-particle--six { top:5%; right:30%; width:6px; height:6px; animation-delay:-2.8s; }
+@keyframes kingdom-crystal-float { 0%,100% { transform:translateZ(80px) rotateY(-12deg) rotateZ(2deg) translateY(0); } 50% { transform:translateZ(125px) rotateY(18deg) rotateZ(-2deg) translateY(-18px); } }
+@keyframes crystal-particle-drift { 0%,100% { transform:translate3d(0,0,30px) scale(.8); opacity:.5; } 50% { transform:translate3d(22px,-28px,80px) scale(1.35); opacity:1; } }
 .kingdom-orbit-ring { position:absolute; inset:0; border:1px solid rgba(231,190,83,.55); border-radius:50%; box-shadow:0 0 22px rgba(216,167,43,.15),inset 0 0 18px rgba(216,167,43,.08); transform-style:preserve-3d; }
 .kingdom-orbit-ring::after { content:''; position:absolute; inset:8%; border-radius:50%; border:1px dashed rgba(115,221,232,.32); transform:translateZ(18px); }
 .kingdom-orbit-ring--outer { transform:translateZ(12px) rotateY(12deg); animation:kingdom-public-orbit 18s linear infinite; }
