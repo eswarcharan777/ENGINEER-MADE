@@ -17,7 +17,9 @@ function Home() {
     <>
       <section className="hero hero-globe kingdom-hero">
         <div className="kingdom-orbit-system" aria-hidden="true">
-          <span className="kingdom-crystal" />
+          <span className="kingdom-crystal">
+            <img src="/assets/crystal-circuit-hero.png" alt="" />
+          </span>
           <span className="kingdom-orbit-ring kingdom-orbit-ring--outer" />
           <span className="kingdom-orbit-ring kingdom-orbit-ring--middle" />
           <span className="kingdom-orbit-ring kingdom-orbit-ring--inner" />
