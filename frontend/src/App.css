@@ -243,6 +243,14 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
 }
 .stat-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
 
+.motion-preview-section { position:relative; z-index:2; padding:4.5rem clamp(1.5rem,6vw,7rem); background:radial-gradient(circle at 50% 0,rgba(37,134,201,.16),transparent 40%),#06111f; border-bottom:1px solid rgba(103,178,227,.22); }
+.motion-preview-heading { max-width:680px; margin:0 auto 2.2rem; text-align:center; }.motion-preview-heading span { color:#e9c56e; font-size:.72rem; letter-spacing:.18em; }.motion-preview-heading h2 { margin:.6rem 0; font-size:clamp(1.8rem,3.8vw,3rem); }.motion-preview-heading p { color:#b4c7d9; }
+.motion-preview-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; max-width:1200px; margin:auto; }.motion-preview-card { min-height:225px; padding:1.35rem; position:relative; overflow:hidden; border:1px solid rgba(112,194,241,.25); border-radius:18px; background:linear-gradient(145deg,rgba(15,35,56,.88),rgba(5,13,26,.88)); }.motion-preview-card h3 { margin-top:1.1rem; font-size:1.05rem; }.motion-preview-card p { margin-top:.35rem; color:#aebfd0; font-size:.84rem; }
+.preview-constellation { height:100px; position:relative; background:linear-gradient(22deg,transparent 44%,rgba(102,222,255,.5) 45%,transparent 46%),linear-gradient(-25deg,transparent 55%,rgba(236,195,97,.45) 56%,transparent 57%); }.preview-constellation i { position:absolute; width:10px; height:10px; border-radius:50%; background:#79e4ff; box-shadow:0 0 17px #79e4ff; animation:ek-star-pulse 2.3s ease-in-out infinite; }.preview-constellation i:nth-child(1){left:8%;top:72%}.preview-constellation i:nth-child(2){left:36%;top:41%;animation-delay:-.5s}.preview-constellation i:nth-child(3){left:64%;top:67%;animation-delay:-1s}.preview-constellation i:nth-child(4){right:7%;top:18%;animation-delay:-1.5s}
+.preview-tutor-core { width:100px; height:100px; margin:auto; border-radius:50%; background:radial-gradient(circle at 32% 27%,#edfcff,#5cd7f5 25%,#7659e5 58%,#171638); box-shadow:0 0 28px #5ad9f7,0 0 70px rgba(107,82,227,.7); animation:ek-core-pulse 2.8s ease-in-out infinite; }.preview-tutor-core::after { content:''; display:block; width:120%; height:120%; margin:-10%; border:1px solid rgba(113,225,255,.45); border-radius:50%; animation:ek-galaxy-turn 5s linear infinite; }
+.preview-galaxy { width:110px; height:100px; margin:auto; position:relative; border:1px solid rgba(232,193,91,.55); border-radius:50%; animation:ek-galaxy-turn 9s linear infinite; }.preview-galaxy i { position:absolute; width:12px; height:12px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#fff0ba,#ce9440 60%,#1d497a); box-shadow:0 0 12px #f5c761; }.preview-galaxy i:nth-child(1){top:-5px;left:45px}.preview-galaxy i:nth-child(2){bottom:8px;left:12px}.preview-galaxy i:nth-child(3){right:12px;top:45px;width:8px;height:8px}
+.preview-medallion { width:100px; height:100px; margin:auto; display:grid; place-items:center; border-radius:50%; font-size:2.4rem; color:#fff4bb; background:radial-gradient(circle at 32% 24%,#fffbc7,#e4b044 47%,#6e4813); border:1px solid #ffdc78; box-shadow:0 0 30px rgba(231,185,66,.55); animation:ek-medallion-spin 5s ease-in-out infinite; }
+
 /* ── Section ────────────────────────────────────────────── */
 .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
 .section-header { text-align: center; margin-bottom: 3.5rem; }
@@ -976,6 +984,7 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
   .navbar-links.mobile-open .mobile-dashboard-link a { color: white; background: var(--gradient-1); border-radius: var(--radius-sm); }
   .globe-container { opacity: 0.4; }
   .stats-bar { gap: 2rem; }
+  .motion-preview-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .paths-grid { grid-template-columns: 1fr; }
   .footer-content { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }

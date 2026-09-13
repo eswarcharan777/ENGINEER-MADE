@@ -87,6 +87,16 @@ function Home() {
         </div>
       </div>
 
+      <section className="motion-preview-section">
+        <div className="motion-preview-heading"><span>ENGINEER MADE MOTION SYSTEM</span><h2>Learn inside a living engineering universe</h2><p>Each learning tool has a small visual signal that responds to progress.</p></div>
+        <div className="motion-preview-grid">
+          <article className="motion-preview-card constellation-preview"><div className="preview-constellation"><i/><i/><i/><i/></div><h3>Skill Constellation</h3><p>Unlocked skills light the next path.</p></article>
+          <article className="motion-preview-card tutor-preview"><div className="preview-tutor-core"/><h3>AI Tutor Core</h3><p>A live core responds while the tutor thinks.</p></article>
+          <article className="motion-preview-card galaxy-preview"><div className="preview-galaxy"><i/><i/><i/></div><h3>Project Galaxy</h3><p>Projects become a personal orbit of work.</p></article>
+          <article className="motion-preview-card medal-preview"><div className="preview-medallion">✦</div><h3>Achievement Medallions</h3><p>Milestones earn a rotating royal badge.</p></article>
+        </div>
+      </section>
+
       <section className="section">
         <div className="section-header">
           <h2>Choose Your Path</h2>
