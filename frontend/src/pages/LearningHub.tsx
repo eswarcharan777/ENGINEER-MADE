@@ -102,19 +102,20 @@ export default function LearningHub({ embedded = false, activeFeature, onFeature
   const save = (next: SavedState) => { setState(next); localStorage.setItem(storageKey, JSON.stringify(next)); };
   const recommendation = profile?.educationStatus === 'Graduated' ? 'Industry-ready projects and interview preparation' : profile?.educationStatus === 'PG' ? 'Advanced specialization and research projects' : 'Foundation-first roadmap with guided projects';
   useEffect(() => { document.documentElement.dataset.theme = theme; localStorage.setItem('engineer-made-theme', theme); }, [theme]);
-  // `save` is intentionally excluded: it is a render-local helper and adding it
-  // would restart the active countdown on every render.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!timerRunning) return;
     const interval = window.setInterval(() => setTimerSeconds(current => {
       if (current > 1) return current - 1;
       window.clearInterval(interval); setTimerRunning(false);
-      save({ ...state, focusMinutes: state.focusMinutes + timerPreset, focusSessions: [{ minutes: timerPreset, subject: focusSubject.trim() || 'Untitled focus session', completedAt: new Date().toISOString() }, ...state.focusSessions].slice(0, 50) });
+      setState(previous => {
+        const next = { ...previous, focusMinutes: previous.focusMinutes + timerPreset, focusSessions: [{ minutes: timerPreset, subject: focusSubject.trim() || 'Untitled focus session', completedAt: new Date().toISOString() }, ...previous.focusSessions].slice(0, 50) };
+        localStorage.setItem(storageKey, JSON.stringify(next));
+        return next;
+      });
       return 0;
     }), 1000);
     return () => window.clearInterval(interval);
-  }, [timerRunning, timerPreset, focusSubject, state]);
+  }, [timerRunning, timerPreset, focusSubject, storageKey]);
 
   if (loading) return <div className="loading"><div className="spinner" /></div>;
   if (!user) return <Navigate to="/login" replace />;
