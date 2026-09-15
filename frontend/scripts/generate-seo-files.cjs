@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function productionOrigin() {
-  const raw = process.env.REACT_APP_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+  const raw = process.env.REACT_APP_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || 'https://engineer-made.vercel.app';
   const withProtocol = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
   return withProtocol.replace(/\/$/, '');
 }
