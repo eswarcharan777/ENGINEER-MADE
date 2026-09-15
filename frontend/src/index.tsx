@@ -29,5 +29,9 @@ root.render(
 reportWebVitals();
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'));
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => console.info('[pwa] service worker registered', { scope: registration.scope }))
+      .catch(error => console.error('[pwa] service worker registration failed', error));
+  });
 }

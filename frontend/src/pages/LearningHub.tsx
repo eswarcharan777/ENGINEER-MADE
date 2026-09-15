@@ -90,6 +90,10 @@ export default function LearningHub({ embedded = false, activeFeature, onFeature
     const capture = (event:any) => { event.preventDefault(); setInstallPrompt(event); setInstallHelp('Ready to install on this device.'); };
     const installed = () => { setInstallPrompt(null); setInstallHelp('Engineer Made is installed. Open it from your desktop or app drawer.'); };
     if (window.matchMedia('(display-mode: standalone)').matches) setInstallHelp('Engineer Made is already installed on this device.');
+    else if (!window.isSecureContext) setInstallHelp('Installation requires the deployed HTTPS site. Local or insecure pages cannot be installed.');
+    else if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistration().then(registration => {
+      if (!registration) setInstallHelp('Offline setup is still starting. Reload once after this deployment, then try Install again.');
+    }).catch(() => setInstallHelp('Offline setup could not be checked. Reload the deployed site and retry.'));
     window.addEventListener('beforeinstallprompt', capture); window.addEventListener('appinstalled', installed);
     return () => { window.removeEventListener('beforeinstallprompt', capture); window.removeEventListener('appinstalled', installed); };
   }, []);

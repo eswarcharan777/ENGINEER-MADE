@@ -12,7 +12,21 @@
     }
   },
   "rewrites": [
+    { "source": "/manifest.json", "destination": { "service": "web" } },
+    { "source": "/service-worker.js", "destination": { "service": "web" } },
+    { "source": "/logo192.png", "destination": { "service": "web" } },
+    { "source": "/logo512.png", "destination": { "service": "web" } },
     { "source": "/api/(.*)", "destination": { "service": "api" } },
     { "source": "/(.*)", "destination": { "service": "web" } }
+  ],
+  "headers": [
+    {
+      "source": "/service-worker.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    }
   ]
 }
