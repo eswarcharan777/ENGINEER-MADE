@@ -22,6 +22,7 @@ import Forbidden from './pages/Forbidden';
 import NotFound from './pages/NotFound';
 import ServiceUnavailable from './pages/ServiceUnavailable';
 import CertificateVerify from './pages/CertificateVerify';
+import PublicInfo from './pages/PublicInfo';
 import './App.css';
 
 function AppShell() {
@@ -53,6 +54,11 @@ function AppShell() {
               <Route path="/service-unavailable" element={<ServiceUnavailable />} />
               <Route path="/verify-certificate" element={<CertificateVerify />} />
               <Route path="/verify-certificate/:code" element={<CertificateVerify />} />
+              <Route path="/privacy" element={<PublicInfo kind="privacy" />} />
+              <Route path="/terms" element={<PublicInfo kind="terms" />} />
+              <Route path="/contact" element={<PublicInfo kind="contact" />} />
+              <Route path="/faq" element={<PublicInfo kind="faq" />} />
+              <Route path="/changelog" element={<PublicInfo kind="changelog" />} />
               <Route path="*" element={<NotFound />} />
       </Routes>
     </main>

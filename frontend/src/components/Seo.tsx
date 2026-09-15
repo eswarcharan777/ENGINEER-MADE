@@ -18,6 +18,11 @@ const ROUTE_META: Record<string, { title: string; description: string; noIndex?:
   '/forbidden': { title: 'Access Denied | Engineer Made', description: DEFAULT_DESCRIPTION, noIndex: true },
   '/service-unavailable': { title: 'Service Unavailable | Engineer Made', description: DEFAULT_DESCRIPTION, noIndex: true },
   '/verify-certificate': { title: 'Verify Certificate | Engineer Made', description: 'Verify an Engineer Made learning certificate using its unique credential code.', noIndex: true },
+  '/privacy': { title: 'Privacy Policy | Engineer Made', description: 'How Engineer Made handles learner account and learning activity data.' },
+  '/terms': { title: 'Terms of Use | Engineer Made', description: 'Free educational platform terms for Engineer Made learners.' },
+  '/contact': { title: 'Contact Engineer Made', description: 'Report broken content, accessibility issues, or security concerns to Engineer Made.' },
+  '/faq': { title: 'FAQ | Engineer Made', description: 'Answers about free learning paths, AI guidance, progress, and content reports.' },
+  '/changelog': { title: 'Changelog | Engineer Made', description: 'Recent improvements and product changes in Engineer Made.' },
 };
 
 function setMeta(selector: string, attributes: Record<string, string>) {

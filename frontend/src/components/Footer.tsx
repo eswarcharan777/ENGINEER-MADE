@@ -25,7 +25,11 @@ function Footer() {
         <div className="footer-col">
           <h4>Company</h4>
           <Link to="/about">About Us</Link>
-          <a href="mailto:engineermade@gmail.com">Contact</a>
+          <Link to="/contact">Contact</Link>
+          <Link to="/faq">FAQ</Link>
+          <Link to="/changelog">Changelog</Link>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/terms">Terms</Link>
         </div>
       </div>
       <div className="footer-bottom">

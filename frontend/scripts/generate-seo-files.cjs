@@ -8,7 +8,7 @@ function productionOrigin() {
 }
 
 const origin = productionOrigin();
-const routes = ['/', '/paths', '/about'];
+const routes = ['/', '/paths', '/about', '/faq', '/contact', '/privacy', '/terms', '/changelog'];
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes.map(route => `  <url><loc>${origin}${route}</loc></url>`).join('\n')}
