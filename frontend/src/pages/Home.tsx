@@ -21,7 +21,7 @@ function Home() {
         </div>
         <div className="kingdom-orbit-system" aria-hidden="true">
           <span className="kingdom-crystal">
-            <img src="/assets/crystal-circuit-hero.png" alt="" />
+            <img src="/assets/crystal-circuit-hero.png" alt="Blue and gold crystal circuit learning symbol" fetchPriority="high" />
           </span>
           <span className="crystal-particle crystal-particle--one" />
           <span className="crystal-particle crystal-particle--two" />

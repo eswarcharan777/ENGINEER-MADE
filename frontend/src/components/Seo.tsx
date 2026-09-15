@@ -41,7 +41,7 @@ export default function Seo() {
 
   useEffect(() => {
     const meta = pageMeta(pathname);
-    const configuredOrigin = (process.env.REACT_APP_SITE_URL || window.location.origin).replace(/\/$/, '');
+    const configuredOrigin = (process.env.REACT_APP_SITE_URL || (window.location.hostname === 'localhost' ? window.location.origin : 'https://engineer-made.vercel.app')).replace(/\/$/, '');
     const canonicalUrl = `${configuredOrigin}${pathname === '/' ? '/' : pathname}`;
     const socialImage = `${configuredOrigin}/logo512.png`;
     document.title = meta.title;
@@ -66,6 +66,14 @@ export default function Seo() {
       document.head.appendChild(canonical);
     }
     canonical.href = canonicalUrl;
+
+    const schemaId = 'engineer-made-structured-data';
+    let schema = document.head.querySelector<HTMLScriptElement>(`#${schemaId}`);
+    if (!schema) { schema = document.createElement('script'); schema.id = schemaId; schema.type = 'application/ld+json'; document.head.appendChild(schema); }
+    schema.textContent = JSON.stringify(pathname === '/' ? {
+      '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: SITE_NAME,
+      url: configuredOrigin, description: meta.description, sameAs: ['https://github.com/eswarcharan777/ENGINEER-MADE']
+    } : { '@context': 'https://schema.org', '@type': 'WebSite', name: meta.title, url: canonicalUrl, description: meta.description });
   }, [pathname]);
 
   return null;
