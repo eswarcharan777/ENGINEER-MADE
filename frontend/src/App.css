@@ -95,6 +95,12 @@ h1, h2, .navbar-brand, .footer-brand h3 { font-family: 'Cinzel', Georgia, serif;
   display: none; background: none; border: none;
   color: var(--text-primary); font-size: 1.5rem; cursor: pointer;
 }
+@media (max-width: 1320px) and (min-width: 769px) {
+  .navbar { padding: 0 1rem; }
+  .navbar-links { gap: .85rem; }
+  .navbar-links a { font-size: .82rem; }
+  .navbar-search { width: 210px; }
+}
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {

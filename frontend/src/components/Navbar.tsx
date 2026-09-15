@@ -67,6 +67,11 @@ function Navbar() {
         <li><Link onClick={() => setShowMobileMenu(false)} to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link></li>
         <li><Link onClick={() => setShowMobileMenu(false)} to="/paths" className={location.pathname.startsWith('/paths') ? 'active' : ''}>Learning Paths</Link></li>
         <li><Link onClick={() => setShowMobileMenu(false)} to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link></li>
+        <li><Link onClick={() => setShowMobileMenu(false)} to="/privacy" className={location.pathname === '/privacy' ? 'active' : ''}>Privacy</Link></li>
+        <li><Link onClick={() => setShowMobileMenu(false)} to="/terms" className={location.pathname === '/terms' ? 'active' : ''}>Terms</Link></li>
+        <li><Link onClick={() => setShowMobileMenu(false)} to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link></li>
+        <li><Link onClick={() => setShowMobileMenu(false)} to="/changelog" className={location.pathname === '/changelog' ? 'active' : ''}>Changelog</Link></li>
+        <li><Link onClick={() => setShowMobileMenu(false)} to="/faq" className={location.pathname === '/faq' ? 'active' : ''}>FAQ</Link></li>
         {user && <li className="mobile-dashboard-link"><Link onClick={() => setShowMobileMenu(false)} to="/dashboard">Dashboard</Link></li>}
       </ul>
 
