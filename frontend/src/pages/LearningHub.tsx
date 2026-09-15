@@ -102,6 +102,9 @@ export default function LearningHub({ embedded = false, activeFeature, onFeature
   const save = (next: SavedState) => { setState(next); localStorage.setItem(storageKey, JSON.stringify(next)); };
   const recommendation = profile?.educationStatus === 'Graduated' ? 'Industry-ready projects and interview preparation' : profile?.educationStatus === 'PG' ? 'Advanced specialization and research projects' : 'Foundation-first roadmap with guided projects';
   useEffect(() => { document.documentElement.dataset.theme = theme; localStorage.setItem('engineer-made-theme', theme); }, [theme]);
+  // `save` is intentionally excluded: it is a render-local helper and adding it
+  // would restart the active countdown on every render.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!timerRunning) return;
     const interval = window.setInterval(() => setTimerSeconds(current => {
